@@ -1,0 +1,75 @@
+<html>
+<head>
+<script>
+function showResult(str) {
+ 
+    const table = document.getElementById('dynamicTable');
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function() {
+    fetch('./php/livesearch.php')
+
+   .then(response => response.json())
+  
+   .then(data => {
+    // Create thead
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+
+    const headers = ['date', 'n°serie', 'type', 'categorie', 'reonnage'];
+    headers.forEach(headerText => {
+        const th = document.createElement('th');
+        th.textContent = headerText;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+    console.log(data[3].type)
+
+    // Create tbody
+    const tbody = document.createElement('tbody');
+
+    data.forEach(item => {
+        const row = document.createElement('tr');
+
+        const dateCell = document.createElement('td');
+        dateCell.textContent = item.date_entree;
+        row.appendChild(dateCell);
+
+        const serieCell = document.createElement('td');
+        serieCell.textContent = item.n_serie;
+        row.appendChild(serieCell);
+        row.setAttribute('data-id',item.categorie);
+
+        const typeCell = document.createElement('td');
+        typeCell.textContent = item.type;
+        row.appendChild(typeCell);
+
+        const categorieCell = document.createElement('td');
+        categorieCell.textContent = item.categorie;
+        categorieCell.classList.add('text-right');
+        row.appendChild(categorieCell);
+
+        const reonnageCell = document.createElement('td');
+        reonnageCell.textContent = item.reonnage;
+        reonnageCell.classList.add('text-right');
+        row.appendChild(reonnageCell);
+
+        tbody.appendChild(row);
+    });
+
+    table.appendChild(tbody);})}
+    xhttp.open("GET", "./php/search.php?q"+str,true );
+    xhttp.send();
+}
+</script>
+</head>
+<body>
+
+<form>
+<input type="text" size="30" onkeyup="showResult(this.value)">
+<div id="livesearch"></div>
+<div class="dynamicTable"></div>
+</form>
+
+</body>
+</html>

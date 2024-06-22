@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/f.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="./images/a.png" alt="image" class="main">
+        </div>
+        <div class="contain">
+            <div class="left">
+                <h3 class="l">Together For more energy</h3>
+                <div class="each">
+                    <i class='bx bx-map'></i>
+                    <p>Agence commerciale sonelgaz Bouinan</p>
+                </div>
+                <div class="each">
+                    <i class='bx bx-phone'></i>
+                    <p>0561336041</p>
+                </div>
+                <div class="each">
+                    <i class='bx bx-mail-send'></i>
+                    <p>jpijjrfjmple@gmail.com</p>
+                </div>
+                <div class="each">
+                    <i class='bx bxl-chrome'></i>
+                    <p>Sonalgaz.com</p>
+                </div>
+            </div>
+            <form action="./php/demande_dysfo.php" method="post" enctype="multipart/form-data">
+                <h1 class="title">Demande Compteur dysfonctionnement</h1>
+                <div class="one">
+                    <input type="text" placeholder="Nom" name="nom" required>
+                </div>
+                <br>
+                <div class="one">
+                    <input type="text" placeholder="Prenom" name="prenom" required>
+                </div>
+                <br>
+                <div class="one">
+                    <input type="text" placeholder="Addresse" name="addresse" required>
+                </div>
+                <br>
+                <br>
+                <div class="one">
+                    <div class="upload-zone">
+                        <input type="file" id="fileToUpload" name="fileToUpload" accept=".pdf" required hidden>
+                        <label for="fileToUpload">
+                            <span class="upload-button">Select File</span>
+                            <span class="file-info"></span>
+                        </label>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar"></div>
+                        </div>
+                    </div>
+                    <script>
+                        const uploadZone = document.querySelector('.upload-zone');
+                        const fileInput = document.querySelector('#fileToUpload');
+                        const fileInfo = document.querySelector('.file-info');
+                        const progressBar = document.querySelector('.progress-bar');
+                        
+                        uploadZone.addEventListener('click', () => {
+                          fileInput.click();
+                        });
+                        
+                        fileInput.addEventListener('change', (e) => {
+                          const file = e.target.files[0];
+                          fileInfo.textContent = file.name;
+                          progressBar.style.display = 'block';
+                          // Simulate progress for demonstration (replace with actual upload logic)
+                          let progress = 0;
+                          const interval = setInterval(() => {
+                            progress += 5;
+                            progressBar.style.width = `${progress}%`;
+                            if (progress === 100) {
+                              clearInterval(interval);
+                              progressBar.style.display = 'none';
+                            }
+                          }, 100);
+                        });
+
+                        
+                    </script>
+                </div>
+                <br>
+                <br>
+                <div class="one">
+                    <input type="text" name="n_telephone" id="n_telphone" placeholder="N° de Téléphone" required>
+                </div>
+                <br>
+                <div class="one">
+                    <input type="text" name="n_serie" id="n_serie" placeholder="N° de Série" required>
+                </div>
+                <button>Send form</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+<script src="demande_dysfo.js"></script>

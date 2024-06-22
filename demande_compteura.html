@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/f.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="./images/a.png" alt="image" class="main">
+        </div>
+        <div class="contain">
+            <div class="left">
+                <h3 class="l">Together For more energy</h3>
+                <div class="each">
+                    <i class='bx bx-map'></i>
+                    <p>Agence commerciale sonelgaz Bouinan</p>
+                </div>
+                <div class="each">
+                    <i class='bx bx-phone'></i>
+                    <p>0561336041</p>
+                </div>
+                <div class="each">
+                    <i class='bx bx-mail-send'></i>
+                    <p>jpijjrfjmple@gmail.com</p>
+                </div>
+                <div class="each">
+                    <i class='bx bxl-chrome'></i>
+                    <p>Sonalgaz.com</p>
+                </div>
+            </div>
+            <form action="./php/fo.php" method="post" enctype="multipart/form-data">
+                <h1 class="title">Demande Compteur</h1>
+                <div class="one">
+                    <input type="text" placeholder="Nom" name="nom" required>
+                </div>
+                <br>
+                <div class="one">
+                    <input type="text" placeholder="Prenom" name="prenom" required>
+                </div>
+                <br>
+                <div class="one">
+                    <input type="text" placeholder="Addresse" name="addresse" required>
+                </div>
+                <br>
+                <div class="one">
+                    <div class="upload-zone">
+                        <input type="file" id="fileToUpload" name="fileToUpload" accept=".pdf" required hidden>
+                        <label for="fileToUpload">
+                            <span class="upload-button">Select File</span>
+                            <span class="file-info"></span>
+                        </label>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="one">
+                    <input type="text" name="n_telephone" id="n_telphone" placeholder="N. Telephone" required>
+                </div>
+                <br>
+                <div class="type">
+                    <label for="">Type de compteur:</label>
+                    <label class="oneone">
+                        <input class="radio" type="radio" value="gaz" name="type_c" id="gaz">
+                        <h3>Gaz</h3>
+                    </label>
+                    <label class="oneone">
+                        <input class="radio" type="radio" value="elc" name="type_c" id="elc">
+                        <h3>Electricite</h3>
+                    </label>
+                </div>
+                <button>Send Form</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const uploadZone = document.querySelector('.upload-zone');
+        const fileInput = document.querySelector('#fileToUpload');
+        const fileInfo = document.querySelector('.file-info');
+        const progressBar = document.querySelector('.progress-bar');
+
+        uploadZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            fileInfo.textContent = file.name;
+            progressBar.style.display = 'block';
+            // Simulate progress for demonstration (replace with actual upload logic)
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = `${progress}%`;
+                if (progress === 100) {
+                    clearInterval(interval);
+                    progressBar.style.display = 'none';
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <title>Forms</title>
+    <style>
+        html,
+        body {
+            font-family: "Roboto", sans-serif;
+            overflow: auto;
+            height: 100%;
+        }
+
+        .container {
+          
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo img {
+            max-height: 160px;
+            margin-bottom: 20px;
+        }
+
+        .contain {
+            box-shadow: 0 0 10px rgb(216, 216, 216);
+            border-radius: 6px;
+            width: 100%;
+            min-height: 80vh;
+            max-width: 800px;
+            margin: auto;
+            margin-top: 0%;
+            display: flex;
+            overflow: hidden;
+            margin-bottom: 100px;
+        }
+
+        .left {
+            width: 35%;
+            background-color: rgb(255, 123, 0);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .left i {
+            font-size: 30px;
+            margin-right: 10px;
+        }
+
+        .left p {
+            margin: 0;
+        }
+
+        .alert {
+            display: none;
+            justify-content: center;
+            margin-top: 0;
+            margin-bottom: 1%;
+            margin-left: 150px;
+            margin-right: 150px;
+        }
+
+        @media (max-width: 768px) {
+            .contain {
+                flex-direction: column;
+            }
+
+            .left {
+                width: 100%;
+                border-top-left-radius: 6px;
+                border-top-right-radius: 6px;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            .form-container {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                border-bottom-left-radius: 6px;
+                border-bottom-right-radius: 6px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo text-center">
+            <img src="./images/a.png" alt="image" class="main img-fluid">
+        </div>
+        <div id="al" class="row " role="alert"></div>
+        <div class="contain row">
+            <div class="left col-md-4">
+                <h3 class="l">Together For more energy</h3>
+                <div class="d-flex align-items-center mb-3">
+                    <i class='bx bx-map'></i>
+                    <p>Agence commerciale sonelgaz Bouinan</p>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <i class='bx bx-phone'></i>
+                    <p>0561336041</p>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <i class='bx bx-mail-send'></i>
+                    <p>jpijjrfjmple@gmail.com</p>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <i class='bx bxl-chrome'></i>
+                    <p>Sonalgaz.com</p>
+                </div>
+            </div>
+            <form id="demandeForm" class="col-md-8 p-4 form-container" method="post" enctype="multipart/form-data">
+                <h1 class="title">Demande Compteur</h1>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Nom" name="nom" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Prenom" name="prenom" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="n_serie" id="serie" placeholder="N° de Série" required>
+                </div>
+                <div class="form-group">
+                    <label for="fileToUpload" class="btn btn-primary btn-block">Select File</label>
+                    <input type="file" class="form-control-file" id="fileToUpload" name="fileToUpload" accept=".pdf" required hidden>
+                    <div class="progress mt-2">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <small class="file-info text-muted"></small>
+                </div>
+                
+                
+                <div class="form-group d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success">Send form</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Handle form submission with AJAX
+        $('#demandeForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            const formData = new FormData(this);
+
+            $.ajax({
+                url: './php/deremise.php',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    // Assuming the response is a JSON object
+                    const jsonResponse = JSON.parse(response);
+                    if (jsonResponse.status === 'success') {
+                        const alertBox = document.getElementById('al');
+                        alertBox.className.add ('alert alert-success');
+                        showAlert(jsonResponse.message);
+                    }
+                    else {
+                        const alertBox = document.getElementById('al');
+                        alertBox.className = 'alert alert-danger';
+                        showAlert(jsonResponse.message);
+                    }
+                },
+                error: function () {
+                    const alertBox = document.getElementById('al');
+                        alertBox.className = 'alert alert-danger';
+                    showAlert('There was an error submitting the form.');
+                }
+            });
+        });
+
+        // Function to display alert
+        function showAlert(message) {
+            const alertBox = document.getElementById('al');
+            alertBox.textContent = message;
+            alertBox.style.display = 'block';
+        }
+
+        // Handle file upload
+        const fileInput = document.getElementById('fileToUpload');
+        const fileInfo = document.querySelector('.file-info');
+        const progressBar = document.querySelector('.progress-bar');
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                fileInfo.textContent = `Selected file: ${file.name}`;
+                // Simulate progress for demonstration
+                progressBar.style.width = '100%';
+            }
+        });
+    </script>
+</body>
+
+</html>
